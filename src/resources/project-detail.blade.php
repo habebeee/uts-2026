@@ -93,7 +93,7 @@
                     <p class="text-start">Berikut adalah visualisasi alur logika sistem (Flowchart) atau hubungan tabel database (ERD) dari Sistem Voting Skin YSS:</p>
                     
                     <div class="p-3 bg-secondary rounded-3 my-4 d-inline-block w-100">
-                        <img src="/images/erd-voting.png" alt="Diagram ERD / Flowchart Sistem Voting YSS" class="img-fluid rounded shadow" style="max-height: 500px; object-fit: contain;">
+                        <img src="/images/flowchart.png" alt="Diagram ERD / Flowchart Sistem Voting YSS" class="img-fluid rounded shadow" style="max-height: 500px; object-fit: contain;">
                     </div>
                     
                     <div class="alert alert-info bg-transparent border-info text-info text-start" role="alert">

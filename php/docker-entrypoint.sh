@@ -3,6 +3,11 @@ set -e
 
 echo "🚀 Starting Laravel container setup..."
 
+if [ -z "$PROJECT_NAME" ]; then
+  echo "❌ PROJECT_NAME is not set. Create a .env file in the project root with PROJECT_NAME=uts"
+  exit 1
+fi
+
 # Step 1: Create Laravel project if not already present
 if [ -z "$(find /var/www/html -mindepth 1 -not -path '/var/www/html/.gitkeep' -print -quit)" ]; then
   echo "📦 Creating Laravel project (fila-starter)..."
@@ -204,7 +209,11 @@ fi
 
 # Step 6: Create necessary folders and set permissions
 echo "🔧 Fixing permissions..."
-mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache
+mkdir -p /var/www/html/storage/framework/cache/data \
+  /var/www/html/storage/framework/sessions \
+  /var/www/html/storage/framework/views \
+  /var/www/html/storage/framework/testing \
+  /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 

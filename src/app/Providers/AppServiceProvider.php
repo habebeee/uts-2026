@@ -30,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Activity::class, ActivityPolicy::class);
+
+        view()->composer('layouts.app', function ($view) {
+            $view->with('site', \App\Models\SiteSetting::current());
+        });
+
         Page::formActionsAlignment(Alignment::Right);
         Notifications::alignment(Alignment::End);
         Notifications::verticalAlignment(VerticalAlignment::End);

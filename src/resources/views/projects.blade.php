@@ -1,66 +1,105 @@
 @extends('layouts.app')
 
+@section('title', 'Projects | Portfolio')
+
 @section('content')
+<section class="projects-page">
+    <div class="container">
+        <header class="projects-header fade-up">
+            <span class="section-label"><i class="bi bi-kanban"></i> Portfolio Work</span>
+            <h1>Katalog <span class="text-gradient-accent">Project</span></h1>
+            <p>Ringkasan project yang pernah dan sedang dikerjakan. Gunakan pencarian atau filter status untuk menemukan project tertentu.</p>
+        </header>
 
-<div class="container py-5">
-    <h1 class="mb-4 fw-bold text-primary">
-        Sistem Voting Skin Terfavorit Hero Yi Sun-shin (YSS)
-    </h1>
-
-    <p class="lead">
-        Website voting online berbasis Laravel yang digunakan untuk membantu komunitas pemain Mobile Legends melakukan voting skin favorit hero Yi Sun-shin secara real-time dan terstruktur.
-    </p>
-
-    <hr class="my-4">
-
-    <div class="row">
-        <div class="col-md-6">
-            <h3>Latar Belakang</h3>
-            <p>Dalam komunitas Mobile Legends, voting skin favorit biasanya hanya dilakukan melalui media sosial atau polling sederhana sehingga hasil voting sulit dikelola dan kurang terstruktur.</p>
-        </div>
-        <div class="col-md-6">
-            <h3>Rumusan Masalah</h3>
-            <ul>
-                <li>Membuat sistem voting skin berbasis website.</li>
-                <li>Mengurangi spam/manipulasi voting.</li>
-                <li>Mengelola data voting secara sentral.</li>
-                <li>Menampilkan hasil voting real-time.</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="card my-4 border-primary">
-        <div class="card-body">
-            <h3>Arsitektur & Tech Stack</h3>
-            <div class="row">
-                <div class="col-md-6">
-                    <ul>
-                        <li><strong>Backend:</strong> Laravel & PHP</li>
-                        <li><strong>Database:</strong> MariaDB (MySQL)</li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <ul>
-                        <li><strong>Frontend:</strong> Bootstrap 5</li>
-                        <li><strong>Server:</strong> Docker (Containerization)</li>
-                    </ul>
-                </div>
+        <form method="GET" action="{{ route('projects.index') }}" class="projects-toolbar fade-up" id="projectsFilterForm">
+            <div class="projects-search">
+                <i class="bi bi-search"></i>
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ $search }}"
+                    placeholder="Ketik nama project..."
+                    aria-label="Cari project"
+                >
             </div>
-            
-            <h4 class="mt-4">Perancangan Sistem (ERD/Flowchart)</h4>
-            <div class="text-center p-3 border rounded bg-light">
-                <img src="/images/flowchart.png" alt="Diagram Sistem Voting" class="img-fluid">
-                <p class="small text-muted mt-2">Visualisasi alur logika sistem voting</p>
+
+            <div class="projects-pills">
+                @foreach(['all' => 'Semua', 'development' => 'Dev', 'done' => 'Selesai', 'planning' => 'Rencana'] as $value => $label)
+                    <label class="projects-pill {{ $status === $value ? 'is-active' : '' }}">
+                        <input type="radio" name="status" value="{{ $value }}" @checked($status === $value) onchange="this.form.submit()">
+                        {{ $label }}
+                    </label>
+                @endforeach
             </div>
+        </form>
+
+        <div class="projects-meta fade-up">
+            <span><i class="bi bi-grid"></i> {{ $projects->count() }} project ditemukan</span>
+        </div>
+
+        <div class="projects-grid">
+            @forelse($projects as $project)
+                <article class="project-card fade-up status-{{ $project->status }}">
+                    <div class="project-card-top">
+                        <div class="project-card-heading">
+                            <span class="project-index">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                            <div>
+                                <h2>{{ $project->title }}</h2>
+                                @if($project->badge)
+                                    <span class="project-badge">{{ $project->badge }}</span>
+                                @endif
+                            </div>
+                        </div>
+                        <span class="project-status-chip status-{{ $project->status }}">
+                            {{ $project->statusText() }}
+                        </span>
+                    </div>
+
+                    <p class="project-desc">{{ $project->short_description }}</p>
+
+                    @if(!empty($project->techTagsList()))
+                        <div class="project-tags">
+                            @foreach($project->techTagsList() as $tag)
+                                <span>{{ $tag }}</span>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <div class="project-card-bottom">
+                        <div class="project-progress-compact">
+                            <div class="progress-ring" style="--progress: {{ $project->progress }}">
+                                <span>{{ $project->progress }}%</span>
+                            </div>
+                            <div>
+                                <small>Progress</small>
+                                <strong>{{ $project->progress >= 100 ? 'Selesai' : 'Dalam pengerjaan' }}</strong>
+                            </div>
+                        </div>
+
+                        <a href="{{ route('projects.show', $project) }}" class="project-link-btn">
+                            Selengkapnya
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            @empty
+                <div class="projects-empty fade-up">
+                    <i class="bi bi-inbox"></i>
+                    <h3>Belum ada project</h3>
+                    <p>Coba ubah kata kunci pencarian atau filter status.</p>
+                </div>
+            @endforelse
         </div>
     </div>
-
-    <div class="text-center mt-4">
-        <a href="/pdf/laporanyss.pdf" class="btn btn-danger btn-lg">
-            <i class="bi bi-file-earmark-pdf"></i> Download Laporan Lengkap (PDF)
-        </a>
-    </div>
-
-</div>
-
+</section>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/projects-page.css') }}">
+@endpush
+
+@push('scripts')
+<script>
+    document.body.classList.add('has-projects-page');
+</script>
+@endpush

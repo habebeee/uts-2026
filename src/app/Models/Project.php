@@ -116,6 +116,25 @@ class Project extends Model
         };
     }
 
+    public function problemsList(): array
+    {
+        if (empty($this->problems)) {
+            return [];
+        }
+
+        return collect($this->problems)
+            ->map(function ($item) {
+                if (is_string($item)) {
+                    return $item;
+                }
+
+                return $item['item'] ?? $item['title'] ?? '';
+            })
+            ->filter()
+            ->values()
+            ->all();
+    }
+
     public function techTagsList(): array
     {
         if (! empty($this->tech_tags)) {

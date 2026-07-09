@@ -82,15 +82,11 @@ class ProjectResource extends Resource
                             ])->columns(2),
                         Forms\Components\Tabs\Tab::make('Ringkasan Project')
                             ->schema([
-                                Forms\Components\Textarea::make('background')
-                                    ->label('Latar Belakang')
-                                    ->rows(4)
-                                    ->columnSpanFull(),
                                 Forms\Components\Repeater::make('problems')
-                                    ->label('Rumusan Masalah')
+                                    ->label('Analisis Masalah')
                                     ->simple(
                                         Forms\Components\TextInput::make('item')
-                                            ->label('Poin')
+                                            ->label('Poin Analisis')
                                             ->required(),
                                     )
                                     ->columnSpanFull(),
@@ -103,7 +99,7 @@ class ProjectResource extends Resource
                                 Forms\Components\TextInput::make('server_tech')
                                     ->label('Server'),
                                 Forms\Components\FileUpload::make('diagram_image')
-                                    ->label('Gambar Diagram')
+                                    ->label('Flowchart')
                                     ->image()
                                     ->directory('projects/diagrams')
                                     ->disk('public')
@@ -123,21 +119,17 @@ class ProjectResource extends Resource
                                     ->label('Subjudul Detail')
                                     ->columnSpanFull(),
                                 Forms\Components\Textarea::make('solution_description')
-                                    ->label('Solusi yang Ditawarkan')
-                                    ->rows(4)
-                                    ->columnSpanFull(),
-                                Forms\Components\Textarea::make('background_detail')
-                                    ->label('Latar Belakang Detail')
+                                    ->label('Deskripsi Singkat')
                                     ->rows(4)
                                     ->columnSpanFull(),
                                 Forms\Components\Repeater::make('features')
-                                    ->label('Fitur Utama')
+                                    ->label('Kebutuhan Sistem')
                                     ->schema([
                                         Forms\Components\TextInput::make('title')
-                                            ->label('Judul Fitur')
+                                            ->label('Kebutuhan')
                                             ->required(),
                                         Forms\Components\Textarea::make('description')
-                                            ->label('Deskripsi')
+                                            ->label('Penjelasan')
                                             ->rows(2)
                                             ->required(),
                                     ])
@@ -160,7 +152,7 @@ class ProjectResource extends Resource
                                     ->columns(1)
                                     ->columnSpanFull(),
                                 Forms\Components\Textarea::make('diagram_note')
-                                    ->label('Catatan Diagram')
+                                    ->label('Catatan Flowchart')
                                     ->rows(3)
                                     ->columnSpanFull(),
                             ])->columns(2),

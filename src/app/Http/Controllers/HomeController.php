@@ -13,7 +13,7 @@ class HomeController extends Controller
         return view('home', [
             'site' => SiteSetting::current(),
             'skills' => Skill::active()->ordered()->get(),
-            'projects' => Project::published()->ordered()->limit(3)->get(),
+            'projects' => Project::published()->ordered()->get(),
         ]);
     }
 }

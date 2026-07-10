@@ -77,7 +77,7 @@
     <div class="about-header fade-up">
         <span class="section-label"><i class="bi bi-person-circle"></i> About Me</span>
         <h2 class="section-title mt-3 mb-3">Tentang <span class="text-gradient-accent">Saya</span></h2>
-        <p class="section-subtitle mx-auto">Kenali lebih dekat siapa saya, latar belakang pendidikan, dan teknologi yang saya gunakan sehari-hari.</p>
+        <p class="section-subtitle mx-auto">Mari berteman dekat dengan saya, latar belakang pendidikan, dan teknologi yang saya gunakan sehari-hari.</p>
         <div class="about-edu-badge mt-4">
             <i class="bi bi-mortarboard-fill"></i>
             <span>Semester 4 · Universitas Esa Unggul</span>

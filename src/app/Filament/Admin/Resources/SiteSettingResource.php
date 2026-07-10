@@ -80,9 +80,15 @@ class SiteSettingResource extends Resource
                                 Forms\Components\FileUpload::make('profile_image')
                                     ->label('Foto Profil')
                                     ->image()
-                                    ->directory('profile')
                                     ->disk('public')
+                                    ->directory('profile')
+                                    ->visibility('public')
+                                    ->maxSize(2048)
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                     ->imageEditor()
+                                    ->imagePreviewHeight('250')
+                                    ->downloadable()
+                                    ->openable()
                                     ->columnSpanFull(),
                             ])->columns(2),
                         Forms\Components\Tabs\Tab::make('Halaman Contact')
